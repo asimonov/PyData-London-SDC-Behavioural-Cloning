@@ -1,14 +1,20 @@
 # Behaviorial Cloning Project
 
-[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
+Part of Udacity Self-Driving Car Engineer Nanodegree [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
 Overview
 ---
 This repository contains starting files for the Behavioral Cloning Project.
 
-In this project, you will use what you've learned about deep neural networks and convolutional neural networks to clone driving behavior. You will train, validate and test a model using Keras. The model will output a steering angle to an autonomous vehicle.
+In this project, you will use what you've learned about deep neural networks and 
+convolutional neural networks to clone driving behavior. 
+You will train, validate and test a model using Keras. 
+The model will output a steering angle to an autonomous vehicle.
 
-We have provided a simulator where you can steer a car around a track for data collection. You'll use image data and steering angles to train a neural network and then use this model to drive the car autonomously around the track.
+In the [simulator (download Version 2)](https://github.com/udacity/self-driving-car-sim) 
+you can steer a car around a track for data collection. 
+You'll use image data and steering angles to train a neural network and then 
+use this model to drive the car autonomously around the track.
 
 To meet specifications, the project will require submitting five files: 
 * model.py (script used to create and train the model)
@@ -29,6 +35,18 @@ The goals / steps of this project are the following:
 * Summarize the results with a written report
 
 
+The Simulator
+---
+
+* Steering is controlled via position mouse instead of keyboard. This creates better angles for training. Note the angle is based on the mouse distance. To steer hold the left mouse button and move left or right. To reset the angle to 0 simply lift your finger off the left mouse button.
+* You can toggle record by pressing R, previously you had to click the record button (you can still do that).
+* When recording is finished, saves all the captured images to disk at the same time instead of trying to save them while the car is still driving periodically. You can see a save status and play back of the captured data.
+* You can takeover in autonomous mode. While W or S are held down you can control the car the same way you would in training mode. This can be helpful for debugging. As soon as W or S are let go autonomous takes over again.
+* Pressing the spacebar in training mode toggles on and off cruise control (effectively presses W for you).
+* Added a Control screen
+* Track 2 was replaced from a mountain theme to Jungle with free assets , Note the track is challenging
+* You can use brake input in drive.py by issuing negative throttle values
+
 
 
 
@@ -36,16 +54,12 @@ The goals / steps of this project are the following:
 
 ### Dependencies
 
-We use Python 3.5.
-
-## Anaconda Environment
-
-Per the Anaconda [docs](http://conda.pydata.org/docs):
+We use python 3.5 and [conda environment/package manager](http://conda.pydata.org/docs)
 
 Using Anaconda consists of the following:
 
-1. Install [`miniconda`](http://conda.pydata.org/miniconda.html) on your computer
-2. Create a new `conda` [environment](http://conda.pydata.org/docs/using/envs.html) using this project
+1. Install [`miniconda`](http://conda.pydata.org/miniconda.html) or full Anaconda on your computer
+2. Create a new `conda` [environment](http://conda.pydata.org/docs/using/envs.html)
 3. Each time you wish to work, activate your `conda` environment
 
 ---
@@ -77,15 +91,6 @@ Using Anaconda consists of the following:
 
 ```
 conda env create -f environment.yml python=3.5
-```
-
-*Note*: Some Mac users have reported issues installing TensorFlow using this method. The cause is unknown but seems to be related to `pip`. For the time being, we recommend opening environment.yml in a text editor and swapping
-```yaml
-    - tensorflow==0.12.1
-```
-with
-```yaml
-    - https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-0.12.1-py3-none-any.whl
 ```
 
 **Verify** that the carnd-term1 environment was created in your environments:
@@ -131,7 +136,17 @@ or
 $ activate pydata-sdc
 ```
 
+Install tensorflow.
 
+```sh
+$ pip install tensorflow-gpu==1.0.0
+```
+
+or, if you dont have an NVIDIA GPU and CUDA drivers: 
+
+```sh
+$ pip install tensorflow==1.0.0
+```
 
 
 

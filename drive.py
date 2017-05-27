@@ -16,10 +16,20 @@ from keras.models import load_model
 import h5py
 from keras import __version__ as keras_version
 
+import scipy.misc as sp
+
+
 sio = socketio.Server()
 app = Flask(__name__)
 model = None
 prev_image_array = None
+
+
+shape = (80,160)
+mask = np.zeros((80,160,3))
+mask[0:27,:,:] = 0
+mask[27:65,:,:] = 1
+mask[65:,:,:] = 0
 
 
 class SimplePIController:
@@ -44,7 +54,7 @@ class SimplePIController:
 
 
 controller = SimplePIController(0.1, 0.002)
-set_speed = 9
+set_speed = 30
 controller.set_desired(set_speed)
 
 
@@ -61,6 +71,12 @@ def telemetry(sid, data):
         imgString = data["image"]
         image = Image.open(BytesIO(base64.b64decode(imgString)))
         image_array = np.asarray(image)
+
+        image_array = sp.imresize(image_array, size=shape, interp='cubic')
+        image_array = np.multiply(image_array,mask).astype(np.uint8)
+        transformed_image_array = image_array[None, :, :, :]
+        #print(transformed_image_array.shape)
+
         steering_angle = float(model.predict(image_array[None, :, :, :], batch_size=1))
 
         throttle = controller.update(float(speed))
@@ -111,9 +127,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # check that model Keras version is same as local Keras version
+    print('using model file: "{}"'.format(args.model))
     f = h5py.File(args.model, mode='r')
     model_version = f.attrs.get('keras_version')
     keras_version = str(keras_version).encode('utf8')
+    print('Keras version: ', keras_version)
 
     if model_version != keras_version:
         print('You are using Keras version ', keras_version,
