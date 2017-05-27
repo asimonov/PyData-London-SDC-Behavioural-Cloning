@@ -1,0 +1,24 @@
+name: pydata-sdc
+channels:
+    - https://conda.anaconda.org/menpo
+    - conda-forge
+dependencies:
+    - numpy==1.11.3
+    - matplotlib==2.0.0
+    - jupyter==1.0.0
+    - opencv3==3.1.0
+    - pillow==4.0.0
+    - scikit-learn==0.18.1
+    - scikit-image==0.12.3
+    - scipy==0.18.1
+    - h5py==2.6.0
+    - eventlet
+    - flask-socketio
+    - pandas==0.19.2
+    - ffmpeg
+    - imageio=2.1.2
+    - pyqt=4.11.4
+    - pip:
+        - moviepy
+        - tensorflow==1.0.0
+        - keras==1.2.1

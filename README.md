@@ -10,8 +10,6 @@ In this project, you will use what you've learned about deep neural networks and
 
 We have provided a simulator where you can steer a car around a track for data collection. You'll use image data and steering angles to train a neural network and then use this model to drive the car autonomously around the track.
 
-We also want you to create a detailed writeup of the project. Check out the [writeup template](https://github.com/udacity/CarND-Behavioral-Cloning-P3/blob/master/writeup_template.md) for this project and use it as a starting point for creating your own writeup. The writeup can be either a markdown file or a pdf document.
-
 To meet specifications, the project will require submitting five files: 
 * model.py (script used to create and train the model)
 * drive.py (script to drive the car - feel free to modify this file)
@@ -37,35 +35,13 @@ The goals / steps of this project are the following:
 
 
 ### Dependencies
-This lab requires:
 
-* [CarND Term1 Starter Kit](https://github.com/udacity/CarND-Term1-Starter-Kit)
+We use Python 3.5.
 
-Python 3 is used for entirety of term 1.
-
-## [Anaconda Environment](doc/configure_via_anaconda.md)
-
-Get started [here](doc/configure_via_anaconda.md). 
-More info [here](http://conda.pydata.org/docs/).
-
-Supported Sytems: Linux (CPU), Mac (CPU), Windows (CPU)     
-
-| Pros                         | Cons                                               |
-|------------------------------|----------------------------------------------------|
-| More straight-forward to use | AWS or GPU support is not built in (have to do this yourself)              |
-| More community support       | Implementation is local and OS specific            |
-| More heavily adopted         |                                                    |
-
-# Configure and Manage Your Environment with Anaconda
+## Anaconda Environment
 
 Per the Anaconda [docs](http://conda.pydata.org/docs):
 
-> Conda is an open source package management system and environment management system 
-for installing multiple versions of software packages and their dependencies and 
-switching easily between them. It works on Linux, OS X and Windows, and was created 
-for Python programs but can package and distribute any software.
-
-## Overview
 Using Anaconda consists of the following:
 
 1. Install [`miniconda`](http://conda.pydata.org/miniconda.html) on your computer
@@ -97,20 +73,10 @@ Using Anaconda consists of the following:
 - **Mac:** http://conda.pydata.org/docs/install/quick.html#os-x-miniconda-install
 - **Windows:** http://conda.pydata.org/docs/install/quick.html#windows-miniconda-install
 
-**Setup** your the `carnd-term1` environment. 
+**Create** your the `pydata-sdc` conda environment. 
 
-```sh
-git clone https://github.com/udacity/CarND-Term1-Starter-Kit.git
-cd CarND-Term1-Starter-Kit
 ```
-
-If you are on Windows, **rename**   
-`meta_windows_patch.yml` to   
-`meta.yml`
-
-**Create** carnd-term1.  Running this command will create a new `conda` environment that is provisioned with all libraries you need to be successful in this program.
-```
-conda env create -f environment.yml
+conda env create -f environment.yml python=3.5
 ```
 
 *Note*: Some Mac users have reported issues installing TensorFlow using this method. The cause is unknown but seems to be related to `pip`. For the time being, we recommend opening environment.yml in a text editor and swapping
@@ -139,7 +105,7 @@ conda clean -tp
 To uninstall the environment:
 
 ```sh
-conda env remove -n carnd-term1
+conda env remove -n pydata-sdc
 ```
 
 ---
@@ -148,26 +114,22 @@ conda env remove -n carnd-term1
 
 Now that you have created an environment, in order to use it, you will need to activate the environment. This must be done **each** time you begin a new working session i.e. open a new terminal window. 
 
-**Activate** the `carnd-term1` environment:
+**Activate** the `pydata-sdc` environment:
 
 ### OS X and Linux
 ```sh
-$ source activate carnd-term1
+$ source activate pydata-sdc
 ```
 ### Windows
 Depending on shell either:
 ```sh
-$ source activate carnd-term1
+$ source activate pydata-sdc
 ```
 or
 
 ```sh
-$ activate carnd-term1
+$ activate pydata-sdc
 ```
-
-That's it. Now all of the `carnd-term1` libraries are available to you.
-
-To exit the environment when you have completed your work session, simply close the terminal window.
 
 
 
