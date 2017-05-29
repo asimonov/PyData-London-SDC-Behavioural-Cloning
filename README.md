@@ -1,15 +1,27 @@
-# Behaviorial Cloning Project
+# Cloning Driving Behaviour Using Deep Learning
 
-Part of Udacity Self-Driving Car Engineer Nanodegree [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
+Based on Behaviour Cloning project from Term 1 of 
+Udacity Self-Driving Car Engineer Nanodegree [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
+
 
 Overview
 ---
-This repository contains starting files for the Behavioral Cloning Project.
-
-In this project, you will use what you've learned about deep neural networks and 
-convolutional neural networks to clone driving behavior. 
-You will train, validate and test a model using Keras. 
-The model will output a steering angle to an autonomous vehicle.
+In this project we build a simple deep convolutional neural network
+to drive a car. It will learn from labeled data which is produced by someone
+driving a car in the simulator. So it learns by cloning driving behaviour. 
+This approach to programming self-driving cars is called end-to-end learning
+because it takes raw sensor inputs (image pixels) 
+and produces the resulting control commands
+without breaking the intermediate steps down into logical steps like
+detecting lanes, objects, distances etc.
+[This article by NVIDIA](http://arxiv.org/pdf/1604.07316v1.pdf) details how 
+it was done successfully on a real car using 
+[NVIDIA Drive PX](https://en.wikipedia.org/wiki/Drive_PX-series)
+and about 72 hours of driving in various conditions.
+ 
+We train, validate and test this model using Keras, with Tensorflow back-end. 
+The model receives an image that car sees through the camera and
+will output a steering angle to keep the vehicle on the road.
 
 In the [simulator (download Version 2)](https://github.com/udacity/self-driving-car-sim) 
 you can steer a car around a track for data collection. 

@@ -22,15 +22,8 @@ import scipy.misc as sp
 # simple PI controller to control the speed
 from simple_pi_controller import SimplePIController
 controller = SimplePIController(0.1, 0.002)
-set_speed = 30
+set_speed = 30 # simulator is limited to 30mph anyway
 controller.set_desired(set_speed)
-
-# image preprocessing parameters. resize shape and region-of-interest mask.
-shape = (80,160)
-mask = np.zeros((80,160,3))
-mask[0:27,:,:] = 0
-mask[27:65,:,:] = 1
-mask[65:,:,:] = 0
 
 
 
@@ -41,6 +34,12 @@ prev_image_array = None
 
 
 
+# image preprocessing parameters. resize shape and region-of-interest mask.
+shape = (80,160)
+mask = np.zeros((80,160,3))
+mask[0:27,:,:] = 0
+mask[27:65,:,:] = 1
+mask[65:,:,:] = 0
 
 def preprocess_images(img_array):
     result_array = sp.imresize(img_array, size=shape, interp='cubic')
