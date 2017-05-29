@@ -6,7 +6,7 @@ Udacity Self-Driving Car Engineer Nanodegree [![Udacity - Self-Driving Car NanoD
 
 Overview
 ---
-In this project we build a simple deep convolutional neural network
+In this project we build a simple deep convolutional neural network (CNN)
 to drive a car. It will learn from labeled data which is produced by someone
 driving a car in the simulator. So it learns by cloning driving behaviour. 
 This approach to programming self-driving cars is called end-to-end learning
@@ -17,25 +17,54 @@ detecting lanes, objects, distances etc.
 [This article by NVIDIA](http://arxiv.org/pdf/1604.07316v1.pdf) details how 
 it was done successfully on a real car using 
 [NVIDIA Drive PX](https://en.wikipedia.org/wiki/Drive_PX-series)
-and about 72 hours of driving in various conditions.
- 
-We train, validate and test this model using Keras, with Tensorflow back-end. 
-The model receives an image that car sees through the camera and
-will output a steering angle to keep the vehicle on the road.
+and about 72 hours of driving in various conditions. They called their system DAVE 2 and you
+can see [video of its performance here](https://drive.google.com/file/d/0B9raQzOpizn1TkRIa241ZnBEcjQ/view)
+Notice around minute 8 what image they send to the CNN and the feature maps
+it produces.
 
-In the [simulator (download Version 2)](https://github.com/udacity/self-driving-car-sim) 
-you can steer a car around a track for data collection. 
-You'll use image data and steering angles to train a neural network and then 
-use this model to drive the car autonomously around the track.
+Here we repeat NVIDIA success to show that anyone can program self-driving cars
+using open source tools!
+We use the NVIDIA CNN architecture, code it up in Keras and then
+use python to process telemetery events from the simulator and send the controls back.
+The network takes image that 
+a car sees in the simulator and produces the steering control.
 
-To meet specifications, the project will require submitting five files: 
-* model.py (script used to create and train the model)
-* drive.py (script to drive the car - feel free to modify this file)
-* model.h5 (a trained Keras model)
-* a report writeup file (either markdown or pdf)
-* video.mp4 (a video recording of your vehicle driving autonomously around the track for at least one full lap)
+The Simulator
+---
+Udacity produced an open-source driving simulator based on Unity 3D engine.
+You can grab it [here (download Version 2 or above)](https://github.com/udacity/self-driving-car-sim) 
 
-This README file describes how to output the video in the "Details About Files In This Directory" section.
+After you start the simulator choose the desired graphics quality and resolution.
+Because later we will resize the images to 80x160 pixels, do not choose to high a resolution,
+as the saved images will take up more space and lenghten the preprocessing but will not
+improve the quiality of the resulting network.
+
+Press the record button and choose the folder where the simulator creates
+`IMG` folder and `driving-log.csv` files.
+Then steer the car around the track for data collection. 
+Here are a few points to consider:
+* steering with the keyboard (left/right buttons) is quite sensitive, so you may want to
+limit key press durations
+* you can control steering via mouse instead of keyboard. 
+This creates better angles for training. The angle is based on the mouse distance. 
+To steer hold the left mouse button and move left or right. 
+To reset the angle to 0 simply lift your finger off the left mouse button.
+* You can toggle record by pressing `R` key (or press `record` button on the screen)
+* When recording is finished, all the captured images are saved to the disk at the same time
+You will see save status and play back of the captured data.
+* You can takeover in autonomous mode. While `W` or `S` are held down you can control the 
+car the same way you would in training mode. 
+This can be helpful for debugging. As soon as `W` or `S` are let go simulator goes back
+into autonomous mode.
+* Pressing the `spacebar` in training mode toggles cruise control on and off
+(effectively presses `W` for you).
+
+
+
+
+
+
+
 
 
 The Project
@@ -47,18 +76,13 @@ The goals / steps of this project are the following:
 * Summarize the results with a written report
 
 
-The Simulator
----
+To meet specifications, the project will require submitting five files: 
+* model.py (script used to create and train the model)
+* drive.py (script to drive the car - feel free to modify this file)
+* model.h5 (a trained Keras model)
+* video.mp4 (a video recording of your vehicle driving autonomously around the track for at least one full lap)
 
-* Steering is controlled via position mouse instead of keyboard. This creates better angles for training. Note the angle is based on the mouse distance. To steer hold the left mouse button and move left or right. To reset the angle to 0 simply lift your finger off the left mouse button.
-* You can toggle record by pressing R, previously you had to click the record button (you can still do that).
-* When recording is finished, saves all the captured images to disk at the same time instead of trying to save them while the car is still driving periodically. You can see a save status and play back of the captured data.
-* You can takeover in autonomous mode. While W or S are held down you can control the car the same way you would in training mode. This can be helpful for debugging. As soon as W or S are let go autonomous takes over again.
-* Pressing the spacebar in training mode toggles on and off cruise control (effectively presses W for you).
-* Added a Control screen
-* Track 2 was replaced from a mountain theme to Jungle with free assets , Note the track is challenging
-* You can use brake input in drive.py by issuing negative throttle values
-
+This README file describes how to output the video in the "Details About Files In This Directory" section.
 
 
 
