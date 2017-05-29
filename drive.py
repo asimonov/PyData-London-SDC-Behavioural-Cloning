@@ -19,12 +19,13 @@ from keras import __version__ as keras_version
 import scipy.misc as sp
 
 
-sio = socketio.Server()
-app = Flask(__name__)
-model = None
-prev_image_array = None
+# simple PI controller to control the speed
+from simple_pi_controller import SimplePIController
+controller = SimplePIController(0.1, 0.002)
+set_speed = 30
+controller.set_desired(set_speed)
 
-
+# image preprocessing parameters. resize shape and region-of-interest mask.
 shape = (80,160)
 mask = np.zeros((80,160,3))
 mask[0:27,:,:] = 0
@@ -32,30 +33,19 @@ mask[27:65,:,:] = 1
 mask[65:,:,:] = 0
 
 
-class SimplePIController:
-    def __init__(self, Kp, Ki):
-        self.Kp = Kp
-        self.Ki = Ki
-        self.set_point = 0.
-        self.error = 0.
-        self.integral = 0.
 
-    def set_desired(self, desired):
-        self.set_point = desired
-
-    def update(self, measurement):
-        # proportional error
-        self.error = self.set_point - measurement
-
-        # integral error
-        self.integral += self.error
-
-        return self.Kp * self.error + self.Ki * self.integral
+sio = socketio.Server()
+app = Flask(__name__)
+model = None
+prev_image_array = None
 
 
-controller = SimplePIController(0.1, 0.002)
-set_speed = 30
-controller.set_desired(set_speed)
+
+
+def preprocess_images(img_array):
+    result_array = sp.imresize(img_array, size=shape, interp='cubic')
+    result_array = np.multiply(result_array,mask).astype(np.uint8)
+    return result_array[None, :, :, :]
 
 
 @sio.on('telemetry')
@@ -72,13 +62,11 @@ def telemetry(sid, data):
         image = Image.open(BytesIO(base64.b64decode(imgString)))
         image_array = np.asarray(image)
 
-        image_array = sp.imresize(image_array, size=shape, interp='cubic')
-        image_array = np.multiply(image_array,mask).astype(np.uint8)
-        transformed_image_array = image_array[None, :, :, :]
-        #print(transformed_image_array.shape)
-
-        steering_angle = float(model.predict(image_array[None, :, :, :], batch_size=1))
-
+        # preprocess image
+        preprocessed_img_array = preprocess_images(image_array)
+        # predict steering angle using CNN model
+        steering_angle = float(model.predict(preprocessed_img_array, batch_size=1))
+        # set throttle using PI controller for speed
         throttle = controller.update(float(speed))
 
         print(steering_angle, throttle)
