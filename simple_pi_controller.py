@@ -1,3 +1,4 @@
+# simple PI (Patial/Integral) controller implementation
 class SimplePIController:
     def __init__(self, Kp, Ki):
         self.Kp = Kp
