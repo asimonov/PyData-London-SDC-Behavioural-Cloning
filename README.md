@@ -1,43 +1,64 @@
 # Cloning Driving Behaviour Using Deep Learning
 
-Based on Behaviour Cloning project from Term 1 of 
-Udacity Self-Driving Car Engineer Nanodegree [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
+This demo is based on Behaviour Cloning project from Term 1 of 
+Udacity Self-Driving Car Engineer Nanodegree 
+[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
 
 Overview
 ---
-In this project we build a simple deep convolutional neural network (CNN)
-to drive a car. It will learn from labeled data which is produced by someone
-driving a car in the simulator. So it learns by cloning driving behaviour. 
+In this project we demonstrate few aspects of developing self-driving cars, which
+come together nicely in one simple project and are implemented using open source tools.
+
+Setting: we have a car driving simulator.
+The simulator sends telemetery events with a picture from 'camera', the current steering angle
+and velocity. We write a program that processes the telemetery events, 
+decides what steering angle and throttle to apply, and sends them to the simulator. 
+The goal is to keep the car in the center of the road while driving around the track.
+
+We can drive the car manually around the track and save the images and associated steering
+angles. This gives us labelled dataset which we use to train our program how to drive like
+a human. This is a supervised learning setting. We build a simple deep convolutional 
+neural network (CNN) and train it to associate steering angle with an image. 
+
+Effectively the program clones driving behaviour. 
 This approach to programming self-driving cars is called end-to-end learning
-because it takes raw sensor inputs (image pixels) 
+because it takes raw sensor inputs (in this case image pixels) 
 and produces the resulting control commands
 without breaking the intermediate steps down into logical steps like
-detecting lanes, objects, distances etc.
+detecting lanes, objects, distances, applying if-then-else logic etc.
 [This article by NVIDIA](http://arxiv.org/pdf/1604.07316v1.pdf) details how 
 it was done successfully on a real car using 
 [NVIDIA Drive PX](https://en.wikipedia.org/wiki/Drive_PX-series)
-and about 72 hours of driving in various conditions. They called their system DAVE 2 and you
-can see [video of its performance here](https://drive.google.com/file/d/0B9raQzOpizn1TkRIa241ZnBEcjQ/view)
+and about 72 hours of data, driving on different roads and in various weather conditions. 
+They called their system DAVE 2 and you can see 
+[video of its performance here](https://drive.google.com/file/d/0B9raQzOpizn1TkRIa241ZnBEcjQ/view).
 Notice around minute 8 what image they send to the CNN and the feature maps
 it produces.
 
 Here we repeat NVIDIA success to show that anyone can program self-driving cars
 using open source tools!
-We use the NVIDIA CNN architecture, code it up in Keras and then
-use python to process telemetery events from the simulator and send the controls back.
-The network takes image that 
-a car sees in the simulator and produces the steering control.
+We use a CNN architecture similar to NVIDIA's, code it up in `Keras` and `tensorflow` 
+and then use `python` script as a glue to handle telemetery events using `asincio`, 
+run the prediction 
+and send the controls back.
 
-The Simulator
+The steps of this project are the following:
+* Use the simulator to collect data of good driving behavior 
+* Design, train and validate a model that predicts a steering angle from image data
+* Use the model to drive the vehicle autonomously around the first track in the simulator
+
+
+The Simulator / Data Collection
 ---
-Udacity produced an open-source driving simulator based on Unity 3D engine.
-You can grab it [here (download Version 2 or above)](https://github.com/udacity/self-driving-car-sim) 
+Udacity has produced an open-source driving simulator based on Unity 3D engine.
+You can download it [here (get Version 2 or above)](https://github.com/udacity/self-driving-car-sim).
+You can even modify it for your needs if you feel adventurous!
 
 After you start the simulator choose the desired graphics quality and resolution.
-Because later we will resize the images to 80x160 pixels, do not choose to high a resolution,
+Because later we will resize the images to 80x160 pixels, do not choose too high a resolution,
 as the saved images will take up more space and lenghten the preprocessing but will not
-improve the quiality of the resulting network.
+improve the quiality of the results.
 
 Press the record button and choose the folder where the simulator creates
 `IMG` folder and `driving-log.csv` files.
@@ -49,6 +70,7 @@ limit key press durations
 This creates better angles for training. The angle is based on the mouse distance. 
 To steer hold the left mouse button and move left or right. 
 To reset the angle to 0 simply lift your finger off the left mouse button.
+* the best data can be collected by using a joystick or a steering column, if you have them
 * You can toggle record by pressing `R` key (or press `record` button on the screen)
 * When recording is finished, all the captured images are saved to the disk at the same time
 You will see save status and play back of the captured data.
@@ -59,52 +81,29 @@ into autonomous mode.
 * Pressing the `spacebar` in training mode toggles cruise control on and off
 (effectively presses `W` for you).
 
+Here is the video of how to record the data:
+[![Capturing data](./capture.png)](https://youtu.be/mUV-zxdlpeE)
 
 
 
 
 
-
-
-
-The Project
+Install Dependencies
 ---
-The goals / steps of this project are the following:
-* Use the simulator to collect data of good driving behavior 
-* Design, train and validate a model that predicts a steering angle from image data
-* Use the model to drive the vehicle autonomously around the first track in the simulator. The vehicle should remain on the road for an entire loop around the track.
-* Summarize the results with a written report
-
-
-To meet specifications, the project will require submitting five files: 
-* model.py (script used to create and train the model)
-* drive.py (script to drive the car - feel free to modify this file)
-* model.h5 (a trained Keras model)
-* video.mp4 (a video recording of your vehicle driving autonomously around the track for at least one full lap)
-
-This README file describes how to output the video in the "Details About Files In This Directory" section.
-
-
-
-
-
-### Dependencies
 
 We use python 3.5 and [conda environment/package manager](http://conda.pydata.org/docs)
 
-Using Anaconda consists of the following:
+The steps are:
 
 1. Install [`miniconda`](http://conda.pydata.org/miniconda.html) or full Anaconda on your computer
-2. Create a new `conda` [environment](http://conda.pydata.org/docs/using/envs.html)
+2. Setup `conda` [environment](http://conda.pydata.org/docs/using/envs.html)
 3. Each time you wish to work, activate your `conda` environment
+4. Install tensorflow
 
----
 
-## Installation
+## Install conda
 
 **Download** the version of `miniconda` that matches your system. Make sure you download the version for Python 3.5.
-
-**NOTE**: There have been reports of issues creating an environment using miniconda `v4.3.13`. If it gives you issues try versions `4.3.11` or `4.2.12` from [here](https://repo.continuum.io/miniconda/).
 
 |        | Linux | Mac | Windows | 
 |--------|-------|-----|---------|
@@ -122,6 +121,10 @@ Using Anaconda consists of the following:
 - **Linux:** http://conda.pydata.org/docs/install/quick.html#linux-miniconda-install
 - **Mac:** http://conda.pydata.org/docs/install/quick.html#os-x-miniconda-install
 - **Windows:** http://conda.pydata.org/docs/install/quick.html#windows-miniconda-install
+
+
+## Setup Virtual Environment
+
 
 **Create** your the `pydata-sdc` conda environment. 
 
@@ -141,17 +144,14 @@ conda info --envs
 conda clean -tp
 ```
 
-### Uninstalling 
-
-To uninstall the environment:
+To delete the environment when you dont need it:
 
 ```sh
 conda env remove -n pydata-sdc
 ```
 
----
 
-## Using Anaconda
+## Activate Environment
 
 Now that you have created an environment, in order to use it, you will need to activate the environment. This must be done **each** time you begin a new working session i.e. open a new terminal window. 
 
@@ -161,6 +161,7 @@ Now that you have created an environment, in order to use it, you will need to a
 ```sh
 $ source activate pydata-sdc
 ```
+
 ### Windows
 Depending on shell either:
 ```sh
@@ -172,7 +173,8 @@ or
 $ activate pydata-sdc
 ```
 
-Install tensorflow.
+
+## Install Tensorflow
 
 ```sh
 $ pip install tensorflow-gpu==1.0.0
@@ -185,16 +187,6 @@ $ pip install tensorflow==1.0.0
 ```
 
 
-
-
-## Resources
-
-The following resources can be found in this github repository:
-* drive.py
-* video.py
-* writeup_template.md
-
-The simulator can be downloaded from the classroom. In the classroom, we have also provided sample data that you can optionally use to help train your model.
 
 ## Details About Files In This Directory
 
@@ -215,49 +207,18 @@ The above command will load the trained model and use the model to make predicti
 
 Note: There is known local system's setting issue with replacing "," with "." when using drive.py. When this happens it can make predicted steering values clipped to max/min values. If this occurs, a known fix for this is to add "export LANG=en_US.utf8" to the bashrc file.
 
-#### Saving a video of the autonomous agent
 
-```sh
-python drive.py model.h5 run1
-```
 
-The fourth argument, `run1`, is the directory in which to save the images seen by the agent. If the directory already exists, it'll be overwritten.
 
-```sh
-ls run1
+The Project
+---
 
-[2017-01-09 16:10:23 EST]  12KiB 2017_01_09_21_10_23_424.jpg
-[2017-01-09 16:10:23 EST]  12KiB 2017_01_09_21_10_23_451.jpg
-[2017-01-09 16:10:23 EST]  12KiB 2017_01_09_21_10_23_477.jpg
-[2017-01-09 16:10:23 EST]  12KiB 2017_01_09_21_10_23_528.jpg
-[2017-01-09 16:10:23 EST]  12KiB 2017_01_09_21_10_23_573.jpg
-[2017-01-09 16:10:23 EST]  12KiB 2017_01_09_21_10_23_618.jpg
-[2017-01-09 16:10:23 EST]  12KiB 2017_01_09_21_10_23_697.jpg
-[2017-01-09 16:10:23 EST]  12KiB 2017_01_09_21_10_23_723.jpg
-[2017-01-09 16:10:23 EST]  12KiB 2017_01_09_21_10_23_749.jpg
-[2017-01-09 16:10:23 EST]  12KiB 2017_01_09_21_10_23_817.jpg
-...
-```
 
-The image file name is a timestamp of when the image was seen. This information is used by `video.py` to create a chronological video of the agent driving.
+To meet specifications, the project will require submitting five files: 
+* model.py (script used to create and train the model)
+* drive.py (script to drive the car - feel free to modify this file)
+* model.h5 (a trained Keras model)
+* video.mp4 (a video recording of your vehicle driving autonomously around the track for at least one full lap)
 
-### `video.py`
 
-```sh
-python video.py run1
-```
 
-Creates a video based on images found in the `run1` directory. The name of the video will be the name of the directory followed by `'.mp4'`, so, in this case the video will be `run1.mp4`.
-
-Optionally, one can specify the FPS (frames per second) of the video:
-
-```sh
-python video.py run1 --fps 48
-```
-
-Will run the video at 48 FPS. The default FPS is 60.
-
-#### Why create a video
-
-1. It's been noted the simulator might perform differently based on the hardware. So if your model drives succesfully on your machine it might not on another machine (your reviewer). Saving a video is a solid backup in case this happens.
-2. You could slightly alter the code in `drive.py` and/or `video.py` to create a video of what your model sees after the image is processed (may be helpful for debugging).
