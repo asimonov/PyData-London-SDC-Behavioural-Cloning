@@ -101,7 +101,7 @@ The steps are:
 4. Install tensorflow
 
 
-## Install conda
+### Install conda
 
 **Download** the version of `miniconda` that matches your system. Make sure you download the version for Python 3.5.
 
@@ -123,7 +123,7 @@ The steps are:
 - **Windows:** http://conda.pydata.org/docs/install/quick.html#windows-miniconda-install
 
 
-## Setup Virtual Environment
+### Setup Virtual Environment
 
 
 **Create** your the `pydata-sdc` conda environment. 
@@ -151,19 +151,18 @@ conda env remove -n pydata-sdc
 ```
 
 
-## Activate Environment
+### Activate Environment
 
 Now that you have created an environment, in order to use it, you will need to activate the environment. This must be done **each** time you begin a new working session i.e. open a new terminal window. 
 
 **Activate** the `pydata-sdc` environment:
 
-### OS X and Linux
+On **OS X** and **Linux**:
 ```sh
 $ source activate pydata-sdc
 ```
 
-### Windows
-Depending on shell either:
+On **Windows**, depending on shell either:
 ```sh
 $ source activate pydata-sdc
 ```
@@ -174,17 +173,23 @@ $ activate pydata-sdc
 ```
 
 
-## Install Tensorflow
+### Install Tensorflow
+
+If you **DO** have an NVIDIA GPU and CUDA drivers, install GPU version of tensorflow: 
 
 ```sh
 $ pip install tensorflow-gpu==1.0.0
 ```
 
-or, if you dont have an NVIDIA GPU and CUDA drivers: 
+otherwise setup CPU version which should work on wide range of hardware: 
 
 ```sh
 $ pip install tensorflow==1.0.0
 ```
+
+
+
+
 
 
 
