@@ -172,22 +172,67 @@ or
 $ activate pydata-sdc
 ```
 
+When you are in `pydata-sdc` virtual environment you see `(pydata-sdc)` at the beginning
+of the shell prompt.
+
+
 
 ### Install Tensorflow
 
 If you **DO** have an NVIDIA GPU and CUDA drivers, install GPU version of tensorflow: 
 
 ```sh
-$ pip install tensorflow-gpu==1.0.0
+(pydata-sdc) $ pip install tensorflow-gpu==1.0.0
 ```
 
 otherwise setup CPU version which should work on wide range of hardware: 
 
 ```sh
-$ pip install tensorflow==1.0.0
+(pydata-sdc) $ pip install tensorflow==1.0.0
 ```
 
 
+
+Define and Train the Model
+---
+
+We define and train our model in `Jupyter` notebook called `behavioural-cloning.ipynb`
+Start it up using the following command and then follow the instructions inside:
+
+```sh
+(pydata-sdc) $ jupyter notebook behavioural-cloning.ipynb
+```
+
+The runtime of this notebook for about 8000 images in `IMG` folder
+should be between 8 and 30 minutes, depending on hardware you use.
+If you use GPU the default batch size of 256 images requires that you have
+around 1gGb of GPU memory available for this notebook to run.
+
+Here is the video of how to train the model:
+[![Training The Model](./training.png)](https://youtu.be/EI5kQ_sWlbY)
+
+
+
+
+Run the Model
+---
+
+Now that we have a trained model (which is saved in `model.h5` file) we
+can use it to drive the car! We use `drive.py` script that does it. The
+script does a few things:
+
+1. load model from the file
+2. starts telemetery server
+3. initializes PI controller to adjust the throttle
+4. processes incoming events and runs steering angle prediction
+
+Here is the video of the car being driven by the deep net:
+[![Running The Model](./driving.png)](https://youtu.be/bJIBrPqFCd0)
+
+It looks a little wobbly, but that is just based on simple augmentation
+of driving data consisting of about 3 laps of driving. And using a simple
+deep neural net that was trained for just 5 epochs in 10 minutes.
+You can see the potential!
 
 
 
