@@ -209,7 +209,7 @@ If you use GPU the default batch size of 256 images requires that you have
 around 1gGb of GPU memory available for this notebook to run.
 
 Here is the video of how to train the model:
-[![Training The Model](./training.png)](https://youtu.be/EI5kQ_sWlbY)
+[![Training The Model](./training.png)](https://youtu.be/P8yLEI0WZ6w)
 
 
 
