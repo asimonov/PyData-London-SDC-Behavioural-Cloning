@@ -209,12 +209,14 @@ If you use GPU the default batch size of 256 images requires that you have
 around 1gGb of GPU memory available for this notebook to run.
 
 This is the original architecture of NVIDIA CNN:
+
 ![NVIDIA CNN](./nvidia-cnn-architecture.png)
+
 We use a slightly modified version (sorry, did not have time to produce proper
 diagram)
 
 
-Here is the video of how to train the model:
+Here is the video of how we train the model:
 [![Training The Model](./training.png)](https://youtu.be/P8yLEI0WZ6w)
 
 
