@@ -4,6 +4,7 @@ This demo is based on Behaviour Cloning project from Term 1 of
 Udacity Self-Driving Car Engineer Nanodegree 
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
+[The presentation slides are here](./PyData-SDC-20170606.pdf)
 
 Overview
 ---
